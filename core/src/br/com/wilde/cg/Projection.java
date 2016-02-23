@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 public class Projection implements ApplicationListener {
 	public Environment lights;
-	public PerspectiveCamera camera;
+	public PerspectiveCamera cam;
 	public ModelBatch modelBatch;
 	public Model model;
 	public ModelInstance instance;
@@ -26,17 +26,19 @@ public class Projection implements ApplicationListener {
 	public void create() {
 		
 		lights = new Environment();
-		lights.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));		
-		lights.add(new DirectionalLight().set(Config.COR_LUZ , Config.DIRECAO_LUZ));
+		lights.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
+		lights.add(new DirectionalLight().set(Config.COR_LUZ, Config.DIRECAO_LUZ));
 
 		modelBatch = new ModelBatch();
 
-		camera = new PerspectiveCamera(Config.ANGULO_DE_ABERTURA_CAMERA, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(Config.POSICAO_INICIAL_CAMERA);
-		camera.lookAt(Config.FOCO_INICIAL_CAMERA);
-		camera.near = Config.DISTANCIA_MAXIMA_CAMERA;
-		camera.far = Config.DISTANCIA_MAXIMA_CAMERA;
-		camera.update();
+		PerspectiveCamera perspective = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
+		cam = perspective;
+		cam.position.set(Config.POSICAO_INICIAL_CAMERA);
+		cam.lookAt(Config.FOCO_INICIAL_CAMERA);
+		cam.near = Config.DISTANCIA_MINIMA_CAMERA;
+		cam.far = Config.DISTANCIA_MAXIMA_CAMERA;
+		cam.update();
+
 
 		ModelBuilder modelBuilder = new ModelBuilder();
 		model = modelBuilder.createBox(5f, 5f, 5f, new Material(ColorAttribute.createDiffuse(Color.RED)),
@@ -49,7 +51,7 @@ public class Projection implements ApplicationListener {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
  
-        modelBatch.begin(camera);
+        modelBatch.begin(cam);
         modelBatch.render(instance, lights);
         modelBatch.end();
 	}
