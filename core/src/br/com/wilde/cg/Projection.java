@@ -44,6 +44,10 @@ public class Projection implements ApplicationListener {
 		model = modelBuilder.createBox(5f, 5f, 5f, new Material(ColorAttribute.createDiffuse(Color.RED)),
 				Usage.Position | Usage.Normal);
 		instance = new ModelInstance(model);
+		
+		Gdx.input.setInputProcessor(new InputListener(cam));
+		Gdx.input.setCursorCatched(true);
+		
 	}
 
 	@Override
