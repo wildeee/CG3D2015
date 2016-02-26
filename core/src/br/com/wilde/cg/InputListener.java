@@ -7,50 +7,39 @@ import com.badlogic.gdx.math.Vector3;
 
 public class InputListener implements InputProcessor {
 	
-	private final Vector3 posicaoCamera;
-	private final Vector3 focoCamera;
 	private final PerspectiveCamera cam;
-	private int dragX, dragY;
+	private int dragX;
+	private int dragY;
 	private final float rotateSpeed = 0.2f;
+	private final CameraMovement mover;
 	
 	public InputListener(PerspectiveCamera cam) {
-		posicaoCamera = Config.POSICAO_INICIAL_CAMERA;
-		focoCamera = Config.POSICAO_INICIAL_CAMERA;
 		this.cam = cam;
+		dragX = dragY = 0;
+		this.mover = new CameraMovement(cam);
+		Thread t = new Thread(mover);
+		t.start();
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		float speed = 0.5f;
-		Vector3 v = cam.direction.cpy();
+		
         
 		switch(keycode){
 			case Keys.W:
-	            v.y = 0f;
-	            v.x *= speed;
-	            v.z *= speed;
+	            mover.setMoveForward(Boolean.TRUE);
 				break;
 				
 			case Keys.A:
-	            v.y = 0f;
-	            v.rotate(Vector3.Y, 90);
-	            v.x *= speed;
-	            v.z *= speed;
+	            mover.setMoveLeft(Boolean.TRUE);
 				break;
 				
 			case Keys.D:
-	            v.y = 0f;
-	            v.rotate(Vector3.Y, -90);
-	            v.x *= speed;
-	            v.z *= speed;
+	            mover.setMoveRight(Boolean.TRUE);;
 				break;
 				
 			case Keys.S:
-	            v.y = 0f;
-	            v.x = -v.x;
-	            v.z = -v.z;
-	            v.x *= speed;
-	            v.z *= speed;
+	            mover.setMoveBackward(Boolean.TRUE);
 				break;
 				
 			case Keys.CONTROL_LEFT:
@@ -58,16 +47,41 @@ public class InputListener implements InputProcessor {
 				
 			case Keys.SPACE:
 				break;
+			default:
+				return false;
 		}
 		
-		cam.translate(v);
-        cam.update();
+		
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
+		switch(keycode){
+		case Keys.W:
+            mover.setMoveForward(Boolean.FALSE);
+			break;
+			
+		case Keys.A:
+            mover.setMoveLeft(Boolean.FALSE);
+			break;
+			
+		case Keys.D:
+            mover.setMoveRight(Boolean.FALSE);
+			break;
+			
+		case Keys.S:
+            mover.setMoveBackward(Boolean.FALSE);
+			break;
+			
+		case Keys.CONTROL_LEFT:
+			break;
+			
+		case Keys.SPACE:
+			break;
+		default:
+			return false;
+		}
 		return false;
 	}
 
@@ -97,8 +111,6 @@ public class InputListener implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		Vector3 direction = cam.direction.cpy();
-
         float x = dragX - screenX;
         cam.rotate(Vector3.Y,x * rotateSpeed);
 
