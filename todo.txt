@@ -1,3 +1,7 @@
-- Camera dinamica com WASD
-- Objetos customizados
-- Informações na tela
+- Definição de objetos
+- Vista Dinâmica -- OK
+- Superfícies ocultas
+- Projeção wireframe
+- Translação 3d
+- Plano definido - OK
+- Correção aspect ratio - OK
