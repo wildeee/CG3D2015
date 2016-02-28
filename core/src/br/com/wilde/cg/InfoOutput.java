@@ -16,9 +16,9 @@ public class InfoOutput {
 	public void outputInformation() {
 		isInputing = Boolean.TRUE;
 		Vector3 position = cam.position;
-		System.out.printf("\nPonto de vista:\n(%2.2f %2.2f %2.2f)", position.x, position.y, position.z);
+		System.out.printf("\nPonto de vista:\nP: (%2.2f %2.2f %2.2f)", position.x, position.y, position.z);
 		Vector3[] frustrumPoints = cam.frustum.planePoints;
-		System.out.printf("\nPlano de projeção:\nP1 (%4.2f %4.2f %4.2f)\nP2 (%4.2f %4.2f %4.2f)\nP3 (%4.2f %4.2f %4.2f)\n"
+		System.out.printf("\nPlano de projeção:\nP1: (%4.2f %4.2f %4.2f)\nP2: (%4.2f %4.2f %4.2f)\nP3: (%4.2f %4.2f %4.2f)\n"
 				,frustrumPoints[7].x
 				,frustrumPoints[7].y
 				,frustrumPoints[7].z
