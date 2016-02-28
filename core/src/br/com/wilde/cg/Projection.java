@@ -18,9 +18,9 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 public class Projection implements ApplicationListener {
 	public Environment lights;
 	public PerspectiveCamera cam;
-	public ModelBatch modelBatch;
-	public Model model;
-	public ModelInstance instance;
+	public ModelBatch batch;
+	public Model cube;
+	public ModelInstance cubeInstance;
 
 	@Override
 	public void create() {
@@ -29,7 +29,7 @@ public class Projection implements ApplicationListener {
 		lights.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
 		lights.add(new DirectionalLight().set(Config.COR_LUZ, Config.DIRECAO_LUZ));
 
-		modelBatch = new ModelBatch();
+		batch = new ModelBatch();
 
 		PerspectiveCamera perspective = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); 
 		cam = perspective;
@@ -41,9 +41,9 @@ public class Projection implements ApplicationListener {
 
 
 		ModelBuilder modelBuilder = new ModelBuilder();
-		model = modelBuilder.createBox(5f, 5f, 5f, new Material(ColorAttribute.createDiffuse(Color.RED)),
+		cube = modelBuilder.createBox(5f, 5f, 5f, new Material(ColorAttribute.createDiffuse(Color.RED)),
 				Usage.Position | Usage.Normal);
-		instance = new ModelInstance(model);
+		cubeInstance = new ModelInstance(cube);
 		
 		Gdx.input.setInputProcessor(new InputListener(cam));
 		Gdx.input.setCursorCatched(true);
@@ -55,15 +55,16 @@ public class Projection implements ApplicationListener {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
  
-        modelBatch.begin(cam);
-        modelBatch.render(instance, lights);
-        modelBatch.end();
+        batch.begin(cam);
+        batch.render(cubeInstance, lights);
+        batch.end();
+
 	}
 	
 	@Override
 	public void dispose() {
-		modelBatch.dispose();
-		model.dispose();
+		batch.dispose();
+		cube.dispose();
 	}
 	
 	@Override

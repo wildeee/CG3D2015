@@ -12,8 +12,10 @@ public class InputListener implements InputProcessor {
 	private int dragY;
 	private final float rotateSpeed = 0.2f;
 	private final CameraMovement mover;
+	private InfoOutput logger;
 	
 	public InputListener(PerspectiveCamera cam) {
+		logger = new InfoOutput(cam);
 		this.cam = cam;
 		dragX = dragY = 0;
 		this.mover = new CameraMovement(cam);
@@ -23,8 +25,6 @@ public class InputListener implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		
-        
 		switch(keycode){
 			case Keys.W:
 	            mover.setMoveForward(Boolean.TRUE);
@@ -122,6 +122,9 @@ public class InputListener implements InputProcessor {
         cam.update();
         dragX = screenX;
         dragY = screenY;
+        if (!InfoOutput.isInputing){
+        	logger.outputInformation();
+        }
         return true;
 	}
 

@@ -1,7 +1,8 @@
 - Definição de objetos
 - Vista Dinâmica -- OK
-- Superfícies ocultas
+- Superfícies ocultas -- OK
 - Projeção wireframe
 - Translação 3d
-- Plano definido - OK
-- Correção aspect ratio - OK
+- Plano definido -- OK
+- Correção aspect ratio -- OK
+- Display informações -- OK

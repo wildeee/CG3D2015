@@ -11,9 +11,12 @@ public class CameraMovement implements Runnable {
 	private Boolean moveLeft;
 	private Boolean moveRight;
 	private Boolean moveBackward;
+	private InfoOutput logger;
 
 	public CameraMovement(PerspectiveCamera cam){
 		this.cam = cam;
+		logger = new InfoOutput(cam);
+		
 		moveForward  = false;
 		moveLeft     = false;
 		moveRight    = false;
@@ -22,52 +25,60 @@ public class CameraMovement implements Runnable {
 
 	@Override
 	public void run() {
-		final float speed = 0.3f;
-		Vector3 v;
+		final float speed = 0.1f;
+		Vector3 direction;
+		
 		while(true){
-			v = cam.direction.cpy();
+			direction = cam.direction.cpy();
 			if (moveForward){
-				v.x *= speed;
-	            v.z *= speed;
-	            cam.translate(v);
+				direction.x *= speed;
+				direction.y *= speed;
+	            direction.z *= speed;
+	            cam.translate(direction);
 		        cam.update();
+		        logger.outputInformation();
 			}
 			
 			if (moveLeft){
-				v.y = 0f;
-	            v.rotate(Vector3.Y, 90);
-	            v.x *= speed * 2;
-	            v.z *= speed * 2;
-	            cam.translate(v);
+				direction.y = 0f;
+	            direction.rotate(Vector3.Y, 90);
+	            direction.x *= speed * 2;
+	            direction.z *= speed * 2;
+	            cam.translate(direction);
 		        cam.update();
+		        logger.outputInformation();
 			}
-			
+				
 			if (moveRight){
-				v.y = 0f;
-	            v.rotate(Vector3.Y, -90);
-	            v.x *= speed * 2;
-	            v.z *= speed * 2;
-	            cam.translate(v);
+				direction.y = 0f;
+	            direction.rotate(Vector3.Y, -90);
+	            direction.x *= speed * 2;
+	            direction.z *= speed * 2;
+	            cam.translate(direction);
 		        cam.update();
+		        logger.outputInformation();
 			}
 			
 			if (moveBackward){
-				v.x = -v.x;
-				v.y = -v.y;
-	            v.z = -v.z;
-	            v.x *= speed;
-	            v.y *= speed;
-	            v.z *= speed;
-	            cam.translate(v);
+				direction.x = -direction.x;
+				direction.y = -direction.y;
+	            direction.z = -direction.z;
+	            direction.x *= speed;
+	            direction.y *= speed;
+	            direction.z *= speed;
+	            cam.translate(direction);
 		        cam.update();
-			}		
+		        logger.outputInformation();
+			}
 			try {
-				Thread.sleep(40);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
 	}
+
+
 
 	public void setMoveForward(Boolean moveForward) {
 		this.moveForward = moveForward;
@@ -84,9 +95,5 @@ public class CameraMovement implements Runnable {
 	public void setMoveBackward(Boolean moveBackward) {
 		this.moveBackward = moveBackward;
 	}
-	
-	
-	
-	
-	
+
 }
