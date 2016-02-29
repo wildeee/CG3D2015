@@ -2,25 +2,23 @@ package br.com.wilde.cg;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 public class Projection implements ApplicationListener {
 	public Environment lights;
 	public PerspectiveCamera cam;
 	public ModelBatch batch;
-	public Model cube;
-	public ModelInstance cubeInstance;
+	public Model model;
+	public ModelInstance instance;
+	
+	public Cube cube;
 
 	@Override
 	public void create() {
@@ -39,11 +37,11 @@ public class Projection implements ApplicationListener {
 		cam.far = Config.DISTANCIA_MAXIMA_CAMERA;
 		cam.update();
 
+		cube = new Cube();
 
-		ModelBuilder modelBuilder = new ModelBuilder();
-		cube = modelBuilder.createBox(2f, 4f, 6f, new Material(ColorAttribute.createDiffuse(Color.WHITE)),
-				Usage.Position | Usage.Normal);
-		cubeInstance = new ModelInstance(cube);
+		model = cube.create();
+				
+		instance = new ModelInstance(model);
 		
 		Gdx.input.setInputProcessor(new InputListener(cam));
 		Gdx.input.setCursorCatched(true);
@@ -56,7 +54,7 @@ public class Projection implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
  
         batch.begin(cam);
-        batch.render(cubeInstance, lights);
+        batch.render(instance, lights);
         batch.end();
 
 	}
@@ -64,7 +62,7 @@ public class Projection implements ApplicationListener {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		cube.dispose();
+		model.dispose();
 	}
 	
 	@Override
