@@ -18,7 +18,7 @@ public class Projection implements ApplicationListener {
 	public Model model;
 	public ModelInstance instance;
 	
-	public Cube cube;
+	public TridimensionalObject tridimensionalObject;
 
 	@Override
 	public void create() {
@@ -37,9 +37,7 @@ public class Projection implements ApplicationListener {
 		cam.far = Config.DISTANCIA_MAXIMA_CAMERA;
 		cam.update();
 
-		cube = new Cube();
-
-		model = cube.create();
+		model = Config.OBJECT_TYPE.getModel();
 				
 		instance = new ModelInstance(model);
 		
