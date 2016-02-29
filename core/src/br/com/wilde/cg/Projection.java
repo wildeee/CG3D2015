@@ -1,5 +1,9 @@
 package br.com.wilde.cg;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,11 +21,29 @@ public class Projection implements ApplicationListener {
 	public ModelBatch batch;
 	public Model model;
 	public ModelInstance instance;
+	private EObjectType type;
 	
 	public TridimensionalObject tridimensionalObject;
 
 	@Override
 	public void create() {
+		
+		BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			System.out.println("Selecione um tipo de objeto: ");
+			for (EObjectType obj : EObjectType.values()){
+				System.out.println(obj.getId() + " - " + obj.toString());
+			}
+			System.out.print("Selecione: ");
+			String line = buffer.readLine();
+			
+			Integer selection = Integer.parseInt(line);
+			type = EObjectType.getById(selection);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		
 		lights = new Environment();
 		lights.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f));
@@ -37,7 +59,7 @@ public class Projection implements ApplicationListener {
 		cam.far = Config.DISTANCIA_MAXIMA_CAMERA;
 		cam.update();
 
-		model = Config.OBJECT_TYPE.getModel();
+		model = type.getModel();
 				
 		instance = new ModelInstance(model);
 		

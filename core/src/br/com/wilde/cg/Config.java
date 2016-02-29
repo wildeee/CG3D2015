@@ -25,7 +25,7 @@ public class Config {
 	public static final PolygonConfig CYLINDER = new PolygonConfig(10f, 10f, 10f, 50);
 	
 	// Raio das extremidades da cápsula, Altura, Número de divisões
-	public static final CapsuleConfig CAPSULE = new CapsuleConfig(3f, 20f, 100);
+	public static final CapsuleConfig CAPSULE = new CapsuleConfig(5f, 20f, 100);
 	
 	// Largura, Altura, Profundidade, Número de divisões na horizontal, Número de divisões na vertical (cima e baixo)
 	public static final SphereConfig SPHERE = new SphereConfig(10f, 10f, 10f, 50, 50);
