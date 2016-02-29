@@ -41,7 +41,7 @@ public class Projection implements ApplicationListener {
 
 
 		ModelBuilder modelBuilder = new ModelBuilder();
-		cube = modelBuilder.createBox(5f, 5f, 5f, new Material(ColorAttribute.createDiffuse(Color.RED)),
+		cube = modelBuilder.createBox(2f, 4f, 6f, new Material(ColorAttribute.createDiffuse(Color.WHITE)),
 				Usage.Position | Usage.Normal);
 		cubeInstance = new ModelInstance(cube);
 		
