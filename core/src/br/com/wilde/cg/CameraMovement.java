@@ -36,7 +36,8 @@ public class CameraMovement implements Runnable {
 	            direction.z *= speed;
 	            cam.translate(direction);
 		        cam.update();
-		        logger.outputInformation();
+		        if (!InfoOutput.isInputing)
+		        	logger.outputInformation();
 			}
 			
 			if (moveLeft){
@@ -46,7 +47,8 @@ public class CameraMovement implements Runnable {
 	            direction.z *= speed * 2;
 	            cam.translate(direction);
 		        cam.update();
-		        logger.outputInformation();
+	        	if (!InfoOutput.isInputing)
+	        		logger.outputInformation();
 			}
 				
 			if (moveRight){
@@ -56,7 +58,8 @@ public class CameraMovement implements Runnable {
 	            direction.z *= speed * 2;
 	            cam.translate(direction);
 		        cam.update();
-		        logger.outputInformation();
+		        if (!InfoOutput.isInputing)
+		        	logger.outputInformation();
 			}
 			
 			if (moveBackward){
@@ -68,7 +71,8 @@ public class CameraMovement implements Runnable {
 	            direction.z *= speed;
 	            cam.translate(direction);
 		        cam.update();
-		        logger.outputInformation();
+		        if (!InfoOutput.isInputing)
+		        	logger.outputInformation();
 			}
 			try {
 				Thread.sleep(10);
